@@ -7,6 +7,9 @@
         </whitelist>
     </filter>
     <testsuites>
+        <testsuite name="Utilities">
+            <directory suffix=".php">./Utilities</directory>
+        </testsuite>
     </testsuites>
 </phpunit>
 
