@@ -1,0 +1,36 @@
+{
+    "schema": "http://json-schema.org/schema#", 
+    "title": "serverConfig",
+    "description": "A remote server where files can be mirrored",
+    "type": "object",
+    "properties": {
+        "serverName": {
+            "description": "The unique name that identifies this server configuration",
+            "type": "string"
+        },
+        "user": {
+            "description": "The user name on the remote server",
+            "type": "string"
+        },
+        "host": {
+            "description": "The host name or address of the remote server",
+            "type": "string"
+        },
+        "publicKey": {
+            "description": "The public key file to use for key-based ssh authentication",
+            "type": "string"
+        },
+        "privateKey": {
+            "description": "The private key file to use for key-based ssh authentication",
+            "type": "string"
+        },
+        "password": {
+            "description": "The password to use for key-based ssh authentication (WARNING: NOT RECOMMENDED)",
+            "type": "string"
+        }
+    },
+    "oneOf": [
+        { "required": ["serverName", "user", "host", "publicKey", "privateKey"] },
+        { "required": ["serverName", "user", "host", "password"] }
+    ]
+}
