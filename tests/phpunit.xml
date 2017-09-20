@@ -1,0 +1,15 @@
+<phpunit bootstrap="../vendor/autoload.php">
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">..</directory>
+            <exclude>
+            </exclude>
+        </whitelist>
+    </filter>
+    <testsuites>
+        <testsuite name="Utilities">
+            <directory suffix=".php">./Utilities</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
+

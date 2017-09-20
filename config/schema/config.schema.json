@@ -1,0 +1,51 @@
+{
+    "schema": "http://json-schema.org/schema#", 
+    "title": "fileMirrorConfig",
+    "description": "The JSON schema that the file-mirror configuration must adhere to",
+    "type": "object",
+    "definitions": {
+        "mirrorFileSet": {
+            "description": "Configuration for mirroring specific files",
+            "type": "object",
+            "properties": {
+                "serverNames": {
+                    "description": "References a set of servers by name where files will be mirrored",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "files": {
+                    "description": "Specific files and directories to be mirrored",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "destinationDirectory": {
+                    "description": "The location/path where the files will be coppied to",
+                    "type": "string"
+                }
+            },
+            "required": ["serverNames", "files", "destinationDirectory"]
+        }
+    },
+
+    "properties": {
+        "servers": {
+            "description": "A set of servers available to mirror files",
+            "type": "array",
+            "items": {
+                "$ref": "file://server.schema.json"
+            }
+        },
+        "mirrorFiles": {
+            "description": "File sets to be mirrored",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/mirrorFileSet"
+            }
+        }
+    },
+    "required": ["servers", "mirrorFiles"]
+}
