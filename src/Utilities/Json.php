@@ -17,7 +17,7 @@ use mssalvatore\FileMirror\Exceptions\JsonException;
  *
  * @return  \stdClass   The decoded json from the contents of $filePath
  */
-function unmarshalJsonFile($filePath)
+function UnmarshalJsonFile($filePath)
 {
     if (! file_exists($filePath)) {
         throw new FileNotFoundException("The file '$filePath' could not be found");
