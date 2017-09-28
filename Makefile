@@ -15,7 +15,7 @@ test:
 	@cd $(TEST) && ./runTests.sh ${ARGS}
 
 test_coverage: mkdir_coverage
-	@cd $(TEST) && ./runTests.sh --coverage-html ../../$(COV)
+	@cd $(TEST) && ./runTests.sh --coverage-html ../$(COV)
 
 mkdir_coverage:
 	@mkdir -p $(COV)
