@@ -9,6 +9,7 @@
     <testsuites>
         <testsuite name="Utilities">
             <directory suffix=".php">./Utilities</directory>
+            <directory suffix=".php">./Monitor</directory>
         </testsuite>
     </testsuites>
 </phpunit>
