@@ -8,8 +8,9 @@
     </filter>
     <testsuites>
         <testsuite name="Utilities">
-            <directory suffix=".php">./Utilities</directory>
+            <directory suffix=".php">./Actions</directory>
             <directory suffix=".php">./Monitor</directory>
+            <directory suffix=".php">./Utilities</directory>
         </testsuite>
     </testsuites>
 </phpunit>
