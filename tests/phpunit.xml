@@ -1,7 +1,7 @@
 <phpunit bootstrap="../vendor/autoload.php">
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">..</directory>
+            <directory suffix=".php">../src</directory>
             <exclude>
             </exclude>
         </whitelist>

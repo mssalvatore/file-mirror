@@ -3,7 +3,7 @@
 namespace mssalvatore\FileMirror\Test\Utilities;
 
 use \PHPUnit\Framework\TestCase;
-use function \mssalvatore\FileMirror\Utilities\unmarshalJsonFile;
+use function \mssalvatore\FileMirror\Utilities\UnmarshalJsonFile;
 
 class JsonTest extends TestCase
 {
@@ -18,7 +18,7 @@ class JsonTest extends TestCase
 
     public function testJsonUnmarshall()
     {
-        $unmarshalled = unmarshalJsonFile($this->configDirectory . "/validConfig.json");
+        $unmarshalled = UnmarshalJsonFile($this->configDirectory . "/validConfig.json");
 
         $this->assertEquals($this->jsonObject, $unmarshalled);
     }
@@ -29,7 +29,7 @@ class JsonTest extends TestCase
      */
     public function testFileNotFound()
     {
-        unmarshalJsonFile("{$this->configDirectory}/no_existe_mas.json");
+        UnmarshalJsonFile("{$this->configDirectory}/no_existe_mas.json");
     }
 
     /**
@@ -38,7 +38,7 @@ class JsonTest extends TestCase
      */
     public function testUnreadableFile()
     {
-        unmarshalJsonFile("{$this->configDirectory}/unreadableFile.json");
+        UnmarshalJsonFile("{$this->configDirectory}/unreadableFile.json");
     }
 
     /**
@@ -47,7 +47,7 @@ class JsonTest extends TestCase
      */
     public function testInvalidConfig()
     {
-        unmarshalJsonFile("{$this->configDirectory}/invalidConfig.json");
+        UnmarshalJsonFile("{$this->configDirectory}/invalidConfig.json");
     }
 
 
