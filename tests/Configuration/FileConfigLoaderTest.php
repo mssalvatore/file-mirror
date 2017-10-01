@@ -1,15 +1,15 @@
 <?php
 
-namespace mssalvatore\FileMirror\Test\Utilities;
+namespace mssalvatore\FileMirror\Test\Configuration;
 
+use \mssalvatore\FileMirror\Configuration\FileConfigLoader;
 use \mssalvatore\FileMirror\Exceptions\JsonException;
-use \mssalvatore\FileMirror\Utilities\ConfigLoader;
 use \PHPUnit\Framework\TestCase;
 use \org\bovigo\vfs\vfsStream;
 use \org\bovigo\vfs\vfsStreamDirectory;
 use \org\bovigo\vfs\vfsStreamWrapper;
 
-class ConfigLoaderTest extends TestCase
+class FileConfigLoaderTest extends TestCase
 {
     protected function setUp()
     {
@@ -28,7 +28,7 @@ class ConfigLoaderTest extends TestCase
     {
         $this->mockValidator->expects($this->exactly(1))->method("validate");
         $this->mockValidator->expects($this->exactly(1))->method("isValid")->willReturn(true);
-        $this->configLoader = new ConfigLoader($this->mockValidator, $this->mockSchema, $this->validFileUrl);
+        $this->configLoader = new FileConfigLoader($this->mockValidator, $this->mockSchema, $this->validFileUrl);
         $this->configLoader->loadConfig();
 
         $this->config = $this->configLoader->getConfig();
@@ -77,7 +77,7 @@ class ConfigLoaderTest extends TestCase
         $this->mockValidator->expects($this->exactly(1))->method("validate");
         $this->mockValidator->expects($this->exactly(1))->method("isValid")->willReturn(false);
         $this->mockValidator->expects($this->exactly(1))->method("getErrors")->willReturn(array(array("property" => "serverName", "message" => "mysterious error")));
-        $this->configLoader = new ConfigLoader($this->mockValidator, $this->mockSchema, $this->validFileUrl);
+        $this->configLoader = new FileConfigLoader($this->mockValidator, $this->mockSchema, $this->validFileUrl);
         $this->configLoader->loadConfig();
     }
 
@@ -90,7 +90,7 @@ class ConfigLoaderTest extends TestCase
     {
         $this->mockValidator->expects($this->any())->method("validate");
         $this->mockValidator->expects($this->any())->method("isValid")->willReturn(true);
-        $this->configLoader = new ConfigLoader($this->mockValidator, $this->mockSchema, $this->validFileUrl);
+        $this->configLoader = new FileConfigLoader($this->mockValidator, $this->mockSchema, $this->validFileUrl);
         $this->config = $this->configLoader->loadConfig();
 
         array_push($this->config->mirrorFiles[1]->serverNames, "enterprise");

@@ -1,11 +1,12 @@
 <?php
 
-namespace mssalvatore\FileMirror\Utilities;
+namespace mssalvatore\FileMirror\Configuration;
 
 use \mssalvatore\FileMirror\Exceptions\JsonException;
 use \mssalvatore\FileMirror\Exceptions\ConfigurationException;
+use function \mssalvatore\FileMirror\Utilities\UnmarshalJsonFile;
 
-class ConfigLoader
+class FileConfigLoader implements ConfigLoaderInterface
 {
     protected $validator;
     protected $configSchema;
