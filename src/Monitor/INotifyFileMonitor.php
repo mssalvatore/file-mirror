@@ -28,23 +28,21 @@ class INotifyFileMonitor implements MonitorInterface
         }
     }
 
-    public function register($filePath)
+    public function register(RegistrationRecord $record)
     {
-        $watchId = $this->inotifyInstance->addWatch($filePath, self::INOTIFY_OPTIONS);
+        $watchId = $this->inotifyInstance->addWatch($record, self::INOTIFY_OPTIONS);
         array_push($this->watchIds, $watchId);
     }
 
-    public function registerCallback(Callable $callback)
+    public function checkEvents()
     {
-        $this->callback = $callback;
-    }
+        $events = array();
+        $inotifyEvents = $this->inotifyInstance->readEvents();
 
-    public function processEvents()
-    {
-        $events = $this->inotifyInstance->readEvents();
-
-        if ($events !== false) {
-            call_user_func($this->callback);
+        foreach ($inotifyEvents as $inotifyEvent) {
+            array_push($events, new Event(time(), $inotifyEvent['mask']));
         }
+
+        return $events;
     }
 }

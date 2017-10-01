@@ -28,6 +28,12 @@ class INotifyWrapper
 
     public function readEvents()
     {
-        return inotify_read($this->inotifyInstance);
+        $events = inotify_read($this->inotifyInstance);
+
+        if ($events === false) {
+            return array();
+        }
+
+        return $events;
     }
 }
