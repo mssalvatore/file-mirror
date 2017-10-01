@@ -4,5 +4,5 @@ namespace mssalvatore\FileMirror\Actions;
 
 interface ActionInterface
 {
-    public function execute();
+    public function execute(array $events);
 }
