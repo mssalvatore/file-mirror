@@ -2,7 +2,7 @@
 
 namespace mssalvatore\FileMirror\Monitor;
 
-class INotifyFileMonitor implements FileMonitorInterface
+class INotifyFileMonitor implements MonitorInterface
 {
     const INOTIFY_OPTIONS = IN_CREATE | IN_MODIFY | IN_DELETE;
     protected $filePath;
@@ -28,7 +28,7 @@ class INotifyFileMonitor implements FileMonitorInterface
         }
     }
 
-    public function registerFile($filePath)
+    public function register($filePath)
     {
         $watchId = $this->inotifyInstance->addWatch($filePath, self::INOTIFY_OPTIONS);
         array_push($this->watchIds, $watchId);

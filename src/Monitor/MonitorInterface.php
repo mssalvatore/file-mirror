@@ -2,9 +2,9 @@
 
 namespace mssalvatore\FileMirror\Monitor;
 
-interface FileMonitorInterface
+interface MonitorInterface
 {
-    public function registerFile($filePath);
+    public function register($filePath);
     public function registerCallback(Callable $callback);
     public function processEvents();
 }

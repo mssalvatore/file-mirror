@@ -38,9 +38,9 @@ class INotifyFileMonitorTest extends TestCase
               ->method("addWatch")
               ->will($this->onConsecutiveCalls(1,5,9));
 
-        $this->INotifyFileMonitor->registerFile("f1");
-        $this->INotifyFileMonitor->registerFile("f2");
-        $this->INotifyFileMonitor->registerFile("f3");
+        $this->INotifyFileMonitor->register("f1");
+        $this->INotifyFileMonitor->register("f2");
+        $this->INotifyFileMonitor->register("f3");
     }
 
     public function testProcessEventsFoundEvents()
