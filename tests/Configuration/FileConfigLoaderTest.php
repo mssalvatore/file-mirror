@@ -44,13 +44,12 @@ class FileConfigLoaderTest extends TestCase
         $this->assertEquals($this->config->servers[0]->user, "adama");
         $this->assertEquals($this->config->servers[0]->host, "galactica.battlestar");
         $this->assertEquals($this->config->servers[0]->publicKey, "~/.ssh/galactica_key.pub");
-        $this->assertEquals($this->config->servers[0]->privateKey, "~/.ssh/galactica_key");
 
         $this->assertEquals($this->config->servers[1]->serverName, "pegasus");
         $this->assertEquals($this->config->servers[1]->user, "cain");
         $this->assertEquals($this->config->servers[1]->host, "pegasus.battlestar");
+        $this->assertEquals($this->config->servers[1]->port, 4422);
         $this->assertEquals($this->config->servers[1]->publicKey, "~/.ssh/pegasus_key.pub");
-        $this->assertEquals($this->config->servers[1]->privateKey, "~/.ssh/pegasus_key");
     }
 
     public function testValidConfigMirrorFiles()
@@ -126,15 +125,14 @@ private $validConfig = <<<VALID
             "serverName": "galactica",
             "user": "adama",
             "host": "galactica.battlestar",
-            "publicKey": "~/.ssh/galactica_key.pub",
-            "privateKey": "~/.ssh/galactica_key"
+            "publicKey": "~/.ssh/galactica_key.pub"
         },
         {
             "serverName": "pegasus",
             "user": "cain",
             "host": "pegasus.battlestar",
-            "publicKey": "~/.ssh/pegasus_key.pub",
-            "privateKey": "~/.ssh/pegasus_key"
+            "port": 4422,
+            "publicKey": "~/.ssh/pegasus_key.pub"
         }
     ],
     "mirrorFiles": [
