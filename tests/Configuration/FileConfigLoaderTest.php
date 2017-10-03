@@ -99,6 +99,24 @@ class FileConfigLoaderTest extends TestCase
         $this->configLoader->loadConfig();
     }
 
+    /**
+     * @expectedException   \mssalvatore\FileMirror\Exceptions\ConfigurationException
+     * @expectedExceptionMessage The server name "pegasus" is duplicated in the "servers" section of the configuration
+     *
+     */
+    public function testDuplicateServers()
+    {
+        $this->mockValidator->expects($this->any())->method("validate");
+        $this->mockValidator->expects($this->any())->method("isValid")->willReturn(true);
+        $this->configLoader = new FileConfigLoader($this->mockValidator, $this->mockSchema, $this->validFileUrl);
+        $this->config = $this->configLoader->loadConfig();
+
+        $this->config->servers[2] = $this->config->servers[1];
+        file_put_contents($this->validFileUrl, json_encode($this->config));
+
+        $this->configLoader->loadConfig();
+    }
+
 
 
 private $validConfig = <<<VALID
