@@ -19,6 +19,7 @@ class INotifyFileMonitor implements MonitorInterface
     public function __destruct()
     {
         $this->clearWatches();
+        $this->inotifyInstance->close();
     }
 
     public function clearWatches()
@@ -30,7 +31,7 @@ class INotifyFileMonitor implements MonitorInterface
 
     public function register(RegistrationRecord $record)
     {
-        $watchId = $this->inotifyInstance->addWatch($record, self::INOTIFY_OPTIONS);
+        $watchId = $this->inotifyInstance->addWatch($record->data, self::INOTIFY_OPTIONS);
         array_push($this->watchIds, $watchId);
     }
 
