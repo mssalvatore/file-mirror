@@ -22,4 +22,14 @@ class RsyncAction implements ActionInterface
     public function cleanup()
     {
     }
+
+    public function getSourcePath()
+    {
+        return $this->sourcePath;
+    }
+
+    public function getDestinationPath()
+    {
+        return $this->destinationPath;
+    }
 }
