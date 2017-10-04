@@ -6,4 +6,5 @@ interface MonitorInterface
 {
     public function register(RegistrationRecord $record);
     public function checkEvents();
+    public function cleanUp();
 }

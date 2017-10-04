@@ -18,4 +18,8 @@ class RsyncAction implements ActionInterface
     {
         $this->rsyncClient->sync($this->sourcePath, $this->destinationPath);
     }
+
+    public function cleanup()
+    {
+    }
 }

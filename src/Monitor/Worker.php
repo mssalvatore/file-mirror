@@ -24,4 +24,10 @@ class Worker
             $this->action->execute($events);
         }
     }
+
+    public function cleanUp()
+    {
+        $this->monitor->cleanUp();
+        $this->action->cleanUp();
+    }
 }

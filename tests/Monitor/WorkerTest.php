@@ -47,4 +47,18 @@ class WorkerTest extends TestCase
 
         $this->worker->work();
     }
+
+    public function testCleanUp()
+    {
+        $this->mockMonitor
+              ->expects($this->once())
+              ->method("cleanUp")
+              ->willReturn(array());
+
+        $this->mockAction
+             ->expects($this->once())
+             ->method("cleanUp");
+
+        $this->worker->cleanUp();
+    }
 }
