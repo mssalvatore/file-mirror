@@ -2,14 +2,9 @@
 
 namespace mssalvatore\FileMirror\Actions;
 
-abstract class AbstractActionFactory
+use \mssalvatore\FileMirror\Monitor\AbstractFactory;
+
+abstract class AbstractActionFactory extends AbstractFactory
 {
-    protected $config;
-
-    public function __construct(\stdClass $config)
-    {
-        $this->config = $config;
-    }
-
     abstract public function buildAction($server, $source, $destination);
 }
