@@ -11,10 +11,13 @@ class RsyncActionFactory extends AbstractActionFactory
 
     public function __construct(\stdClass $config)
     {
-        parent::__construct($config);
-
         $this->rsyncSshConfigTranslator = new RsyncSshConfigTranslator();
+        parent::__construct($config);
+    }
 
+    public function configure(\stdClass $config)
+    {
+        parent::configure($config);
         $this->buildRsyncClients();
     }
 

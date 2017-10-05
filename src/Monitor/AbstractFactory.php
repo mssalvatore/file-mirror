@@ -8,6 +8,11 @@ abstract class AbstractFactory
 
     public function __construct(\stdClass $config)
     {
+        $this->configure($config);
+    }
+
+    public function configure(\stdClass $config)
+    {
         $this->config = $config;
     }
 }
