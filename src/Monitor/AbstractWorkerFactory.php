@@ -4,7 +4,7 @@ namespace mssalvatore\FileMirror\Monitor;
 
 use \mssalvatore\FileMirror\Actions\AbstractActionFactory;
 
-abstract class AbstractWorkerFactory extends AbstractFactory
+abstract class AbstractWorkerFactory extends AbstractConfigurableFactory
 {
     protected $monitorFactory;
     protected $actionFactory;

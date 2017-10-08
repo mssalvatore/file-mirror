@@ -2,7 +2,7 @@
 
 namespace mssalvatore\FileMirror\Monitor;
 
-abstract class AbstractFactory
+abstract class AbstractConfigurableFactory
 {
     protected $config;
 
