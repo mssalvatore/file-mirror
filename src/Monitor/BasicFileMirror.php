@@ -10,9 +10,9 @@ class BasicFileMirror extends AbstractFileMirror
 {
     protected $shouldRun;
 
-    public function __construct(AbstractWorkerFactory $workerFactory, MonitorInterface $configMonitor, ConfigLoaderInterface $configLoader)
+    public function __construct(AbstractWorkerFactory $workerFactory, MonitorInterface $configMonitor, ConfigLoaderInterface $configLoader, ShutdownSignalHandler $shutdownSignalHandler)
     {
-        parent::__construct($workerFactory, $configMonitor, $configLoader);
+        parent::__construct($workerFactory, $configMonitor, $configLoader, $shutdownSignalHandler);
 
         $this->buildWorkers();
 
@@ -32,6 +32,7 @@ class BasicFileMirror extends AbstractFileMirror
                 $worker->work();
             }
             sleep(2);
+            $this->shutdownSignalHandler->handleQueuedSignals();
         }
     }
 
@@ -48,7 +49,6 @@ class BasicFileMirror extends AbstractFileMirror
 
     public function shutdown()
     {
-        echo "I'VE BEEN SHUT DOWN\n";
         $this->shouldRun = false;
     }
 }

@@ -14,8 +14,9 @@ abstract class AbstractFileMirror
     protected $configLoader;
     protected $config;
     protected $workers;
+    protected $shutdownSignalHandler;
 
-    public function __construct(AbstractWorkerFactory $workerFactory, MonitorInterface $configMonitor, ConfigLoaderInterface $configLoader)
+    public function __construct(AbstractWorkerFactory $workerFactory, MonitorInterface $configMonitor, ConfigLoaderInterface $configLoader, ShutdownSignalHandler $shutdownSignalHandler)
     {
         $this->workerFactory = $workerFactory;
         $this->configMonitor = $configMonitor;
@@ -24,6 +25,11 @@ abstract class AbstractFileMirror
         $this->loadConfig();
 
         $this->workers = array();
+
+        $this->shutdownSignalHandler = $shutdownSignalHandler;
+        $this->shutdownSignalHandler->registerSignal(SIGTERM);
+        $this->shutdownSignalHandler->registerSignal(SIGINT);
+        $this->shutdownSignalHandler->registerShutdownCallback(array($this, "shutdown"));
     }
 
     public function addWorker(Worker $worker)
@@ -46,4 +52,5 @@ abstract class AbstractFileMirror
     }
 
     abstract public function run();
+    abstract public function shutdown();
 }
