@@ -27,8 +27,6 @@ abstract class AbstractFileMirror
         $this->workers = array();
 
         $this->shutdownSignalHandler = $shutdownSignalHandler;
-        $this->shutdownSignalHandler->registerSignal(SIGTERM);
-        $this->shutdownSignalHandler->registerSignal(SIGINT);
         $this->shutdownSignalHandler->registerShutdownCallback(array($this, "shutdown"));
     }
 
