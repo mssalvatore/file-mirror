@@ -1,11 +1,12 @@
 <?php
 
-namespace mssalvatore\FileMirror\Utilities;
+namespace mssalvatore\FileMirror\Configuration;
 
 use \mssalvatore\FileMirror\Exceptions\JsonException;
 use \mssalvatore\FileMirror\Exceptions\ConfigurationException;
+use function \mssalvatore\FileMirror\Utilities\UnmarshalJsonFile;
 
-class ConfigLoader
+class FileConfigLoader implements ConfigLoaderInterface
 {
     protected $validator;
     protected $configSchema;
@@ -41,11 +42,17 @@ class ConfigLoader
     protected function throwOnInvalidConfigOptions()
     {
         $this->throwOnInvalidMirrorFileSet();
+        $this->throwOnInvalidServers();
     }
 
     protected function throwOnInvalidMirrorFileSet()
     {
         $this->throwIfInvalidServerSpecified();
+    }
+
+    protected function throwOnInvalidServers()
+    {
+        $this->throwOnDuplicateServer();
     }
 
     protected function throwIfInvalidServerSpecified()
@@ -73,6 +80,18 @@ class ConfigLoader
         }
 
         return false;
+    }
+
+    protected function throwOnDuplicateServer()
+    {
+        $servers = array();
+        foreach ($this->config->servers as $server) {
+            if (array_key_exists($server->serverName, $servers)) {
+                throw new ConfigurationException('The server name "' . $server->serverName . '" is duplicated in the "servers" section of the configuration');
+            } else {
+                $servers[$server->serverName] = true;
+            }
+        }
     }
 
     public function getConfig()

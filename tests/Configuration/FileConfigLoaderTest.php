@@ -1,15 +1,15 @@
 <?php
 
-namespace mssalvatore\FileMirror\Test\Utilities;
+namespace mssalvatore\FileMirror\Test\Configuration;
 
+use \mssalvatore\FileMirror\Configuration\FileConfigLoader;
 use \mssalvatore\FileMirror\Exceptions\JsonException;
-use \mssalvatore\FileMirror\Utilities\ConfigLoader;
 use \PHPUnit\Framework\TestCase;
 use \org\bovigo\vfs\vfsStream;
 use \org\bovigo\vfs\vfsStreamDirectory;
 use \org\bovigo\vfs\vfsStreamWrapper;
 
-class ConfigLoaderTest extends TestCase
+class FileConfigLoaderTest extends TestCase
 {
     protected function setUp()
     {
@@ -28,7 +28,7 @@ class ConfigLoaderTest extends TestCase
     {
         $this->mockValidator->expects($this->exactly(1))->method("validate");
         $this->mockValidator->expects($this->exactly(1))->method("isValid")->willReturn(true);
-        $this->configLoader = new ConfigLoader($this->mockValidator, $this->mockSchema, $this->validFileUrl);
+        $this->configLoader = new FileConfigLoader($this->mockValidator, $this->mockSchema, $this->validFileUrl);
         $this->configLoader->loadConfig();
 
         $this->config = $this->configLoader->getConfig();
@@ -44,13 +44,12 @@ class ConfigLoaderTest extends TestCase
         $this->assertEquals($this->config->servers[0]->user, "adama");
         $this->assertEquals($this->config->servers[0]->host, "galactica.battlestar");
         $this->assertEquals($this->config->servers[0]->publicKey, "~/.ssh/galactica_key.pub");
-        $this->assertEquals($this->config->servers[0]->privateKey, "~/.ssh/galactica_key");
 
         $this->assertEquals($this->config->servers[1]->serverName, "pegasus");
         $this->assertEquals($this->config->servers[1]->user, "cain");
         $this->assertEquals($this->config->servers[1]->host, "pegasus.battlestar");
+        $this->assertEquals($this->config->servers[1]->port, 4422);
         $this->assertEquals($this->config->servers[1]->publicKey, "~/.ssh/pegasus_key.pub");
-        $this->assertEquals($this->config->servers[1]->privateKey, "~/.ssh/pegasus_key");
     }
 
     public function testValidConfigMirrorFiles()
@@ -77,7 +76,7 @@ class ConfigLoaderTest extends TestCase
         $this->mockValidator->expects($this->exactly(1))->method("validate");
         $this->mockValidator->expects($this->exactly(1))->method("isValid")->willReturn(false);
         $this->mockValidator->expects($this->exactly(1))->method("getErrors")->willReturn(array(array("property" => "serverName", "message" => "mysterious error")));
-        $this->configLoader = new ConfigLoader($this->mockValidator, $this->mockSchema, $this->validFileUrl);
+        $this->configLoader = new FileConfigLoader($this->mockValidator, $this->mockSchema, $this->validFileUrl);
         $this->configLoader->loadConfig();
     }
 
@@ -90,10 +89,28 @@ class ConfigLoaderTest extends TestCase
     {
         $this->mockValidator->expects($this->any())->method("validate");
         $this->mockValidator->expects($this->any())->method("isValid")->willReturn(true);
-        $this->configLoader = new ConfigLoader($this->mockValidator, $this->mockSchema, $this->validFileUrl);
+        $this->configLoader = new FileConfigLoader($this->mockValidator, $this->mockSchema, $this->validFileUrl);
         $this->config = $this->configLoader->loadConfig();
 
         array_push($this->config->mirrorFiles[1]->serverNames, "enterprise");
+        file_put_contents($this->validFileUrl, json_encode($this->config));
+
+        $this->configLoader->loadConfig();
+    }
+
+    /**
+     * @expectedException   \mssalvatore\FileMirror\Exceptions\ConfigurationException
+     * @expectedExceptionMessage The server name "pegasus" is duplicated in the "servers" section of the configuration
+     *
+     */
+    public function testDuplicateServers()
+    {
+        $this->mockValidator->expects($this->any())->method("validate");
+        $this->mockValidator->expects($this->any())->method("isValid")->willReturn(true);
+        $this->configLoader = new FileConfigLoader($this->mockValidator, $this->mockSchema, $this->validFileUrl);
+        $this->config = $this->configLoader->loadConfig();
+
+        $this->config->servers[2] = $this->config->servers[1];
         file_put_contents($this->validFileUrl, json_encode($this->config));
 
         $this->configLoader->loadConfig();
@@ -108,15 +125,14 @@ private $validConfig = <<<VALID
             "serverName": "galactica",
             "user": "adama",
             "host": "galactica.battlestar",
-            "publicKey": "~/.ssh/galactica_key.pub",
-            "privateKey": "~/.ssh/galactica_key"
+            "publicKey": "~/.ssh/galactica_key.pub"
         },
         {
             "serverName": "pegasus",
             "user": "cain",
             "host": "pegasus.battlestar",
-            "publicKey": "~/.ssh/pegasus_key.pub",
-            "privateKey": "~/.ssh/pegasus_key"
+            "port": 4422,
+            "publicKey": "~/.ssh/pegasus_key.pub"
         }
     ],
     "mirrorFiles": [

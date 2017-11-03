@@ -16,12 +16,12 @@
             "description": "The host name or address of the remote server",
             "type": "string"
         },
-        "publicKey": {
-            "description": "The public key file to use for key-based ssh authentication",
+        "port": {
+            "description": "The ssh port on the server (default: 22)",
             "type": "string"
         },
-        "privateKey": {
-            "description": "The private key file to use for key-based ssh authentication",
+        "publicKey": {
+            "description": "The public key file to use for key-based ssh authentication",
             "type": "string"
         },
         "password": {
@@ -30,7 +30,7 @@
         }
     },
     "oneOf": [
-        { "required": ["serverName", "user", "host", "publicKey", "privateKey"] },
+        { "required": ["serverName", "user", "host", "publicKey"] },
         { "required": ["serverName", "user", "host", "password"] }
     ]
 }

@@ -14,8 +14,22 @@ class RsyncAction implements ActionInterface
         $this->destinationPath = $destinationPath;
     }
 
-    public function execute()
+    public function execute(array $events)
     {
         $this->rsyncClient->sync($this->sourcePath, $this->destinationPath);
+    }
+
+    public function cleanup()
+    {
+    }
+
+    public function getSourcePath()
+    {
+        return $this->sourcePath;
+    }
+
+    public function getDestinationPath()
+    {
+        return $this->destinationPath;
     }
 }

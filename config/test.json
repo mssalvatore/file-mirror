@@ -1,0 +1,28 @@
+{
+    "servers": [
+        {
+            "serverName": "caprica",
+            "user": "msalvatore",
+            "host": "caprica",
+            "publicKey": "/home/msalvatore/.ssh/id_rsa"
+        },
+        {
+            "serverName": "android",
+            "user": "msalvatore",
+            "host": "caprica",
+            "publicKey": "/home/msalvatore/.ssh/id_rsa.pub"
+        }
+    ],
+    "mirrorFiles": [
+        {
+            "serverNames": ["caprica", "android"],
+            "files": ["/home/msalvatore/compost/f1"],
+            "destinationDirectory": "/home/msalvatore/mirror"
+        },
+        {
+            "serverNames": ["android"],
+            "files": ["/home/msalvatore/compost/f2"],
+            "destinationDirectory": "/home/msalvatore/mirror/"
+        }
+    ]
+}

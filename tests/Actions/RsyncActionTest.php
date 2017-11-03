@@ -22,6 +22,6 @@ class RsyncActionTest extends TestCase
              ->method("sync")
              ->with($this->equalTo(self::SOURCE_PATH), $this->equalTo(self::DESTINATION_PATH));
 
-        $this->rsyncAction->execute();
+        $this->rsyncAction->execute(array());
     }
 }
